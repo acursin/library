@@ -3,11 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/modern-normalize.css">
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/scripts.js" defer></script>
     <title>Library</title>
 </head>
 <body>
-    Library
+    <div class="container">
+        <button id="show-book-modal-button">Add Book</button>
+        <div class="library" id="library"></div>
+        <dialog id="book-modal">
+            <form class="book-form" id="new-book-form" action="#" method="post">
+                <ul class="book-form__list">
+                    <li class="book-form__item">
+                        <label class="book-form__label" for="new-book-title">Title</label>
+                        <input class="book-form__input" type="text" name="new-book-title" id="new-book-title" required>
+                    </li>
+                    <li class="book-form__item">
+                        <label class="book-form__label" for="new-book-author">Author</label>
+                        <input class="book-form__input" type="text" name="new-book-author" id="new-book-author" required>
+                    </li>
+                    <li class="book-form__item">
+                        <label class="book-form__label" for="new-book-pages">Pages</label>
+                        <input class="book-form__input" type="number" name="new-book-pages" id="new-book-pages" required>
+                    </li>
+                    <li class="book-form__item">
+                        <label class="book-form__label" for="">Read</label>
+                        <input class="book-form__checkbox" type="checkbox" name="new-book-read" id="new-book-read">
+                    </li>
+                </ul>
+                <button class="button" id="create-book-button" type="submit">Submit</button>
+            </form>
+        </dialog>
+    </div>
 </body>
 </html>

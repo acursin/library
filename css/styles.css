@@ -1,0 +1,77 @@
+/* Reset styles from https://mattbrictson.com/blog/css-normalize-and-reset */
+
+:root {
+    line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, figure, p, ol, ul {
+    margin: 0;
+}
+
+ol[role="list"], ul[role="list"] {
+    list-style: none;
+    padding-inline: 0;
+}
+
+h1, h2, h3, h4, h5 {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+img {
+    display: block;
+    max-inline-size: 100%;
+}
+
+/* ----------------------------------- */
+body {
+    min-height: 100vh;
+    display: grid;
+    grid: 1fr / 1fr;
+    padding: 100px;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: repeat(2, max-content);
+    justify-items: center;
+    align-items: center;
+    gap: 16px;
+}
+
+.library {
+    display: grid;
+    gap: 8px;
+}
+
+.book {
+    border: 1px solid black;
+    padding: 8px;
+}
+
+.book-form {
+    display: grid;
+    justify-items: center;
+    gap: 16px;
+}
+
+.book-form__list {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.book-form__item {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: subgrid;
+    justify-items: start;
+    gap: 8px;
+}
+
+.book-form__checkbox {
+    margin: 0;
+}
