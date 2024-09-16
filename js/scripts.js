@@ -15,48 +15,54 @@ function addBookToLibrary(book) {
     myLibrary.push(book);
 }
 
-function createBookDisplay(book) {
-    const bookDisplay = document.createElement('article');
-    bookDisplay.classList.add('book');
+function createBookNode(book) {
+    const bookNode = document.createElement('article');
+    bookNode.classList.add('book');
+    bookNode.setAttribute('data-index', myLibrary.indexOf(book))
 
     const bookTitle = document.createElement('p');
     bookTitle.textContent = book.title;
-    bookDisplay.appendChild(bookTitle);
+    bookNode.appendChild(bookTitle);
 
     const bookAuthor = document.createElement('p');
     bookAuthor.textContent = book.author;
-    bookDisplay.appendChild(bookAuthor);
+    bookNode.appendChild(bookAuthor);
 
     const bookPages = document.createElement('p');
     bookPages.textContent = book.pages;
-    bookDisplay.appendChild(bookPages);
+    bookNode.appendChild(bookPages);
 
     const bookReadStatus = document.createElement('p');
     bookReadStatus.textContent = book.read ? 'Read' : 'Not read yet';
-    bookDisplay.appendChild(bookReadStatus);
+    bookNode.appendChild(bookReadStatus);
 
-    return bookDisplay;
+    return bookNode;
 }
 
 function createLibraryDisplay() {
     const libraryDisplay = document.getElementById('library');
     for (const book of myLibrary) {
-        libraryDisplay.appendChild(createBookDisplay(book));
+        libraryDisplay.appendChild(createBookNode(book));
     }
 }
 
 const showBookModalButton = document.getElementById('show-book-modal-button');
 const bookModal = document.getElementById('book-modal');
-const createBookButton = document.getElementById('create-book-button');
 
-showBookModalButton.addEventListener('click', function () {
+showBookModalButton.addEventListener('click', () => {
     bookModal.showModal();
 });
 
-createBookButton.addEventListener('click', function (event) {
-    event.preventDefault();
-    const newBookForm = document.getElementById('new-book-form');
-    console.log(newBookForm.elements);
+const newBookForm = document.getElementById('new-book-form')
+
+newBookForm.addEventListener('submit', () => {
+    const newBookTitle = newBookForm.getElementById('new-book-title').value;
+    const newBookAuthor = newBookForm.getElementById('new-book-author').value;
+    const newBookPages = newBookForm.getElementById('new-book-pages').value;
+    const newBookRead = newBookForm.getElementById('new-book-read').value;
+
+    const newBook = new Book(newBookTitle.value, newBookAuthor.value, newBookPages.value, newBookRead.value);
+    addBookToLibrary(newBook);
 });
 
 // Sample Books (To be removed)
