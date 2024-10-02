@@ -5,44 +5,45 @@ function Book(title, author, pages, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
-    this.info = function() {
-        let readMessage = this.read ? 'read' : 'not read yet';
-        return `${this.title} by ${this.author}, ${this.pages} pages, ${readMessage}`;
-    }
 }
 
-function addBookToLibrary(book) {
-    myLibrary.push(book);
+Book.prototype.info = function() {
+    let readMessage = this.read ? 'read' : 'not read yet';
+    return `${this.title} by ${this.author}, ${this.pages} pages, ${readMessage}`;
 }
 
-function createBookNode(book) {
-    const bookNode = document.createElement('article');
-    bookNode.classList.add('book');
-    bookNode.setAttribute('data-index', myLibrary.indexOf(book))
+Book.prototype.createElement = function() {
+    const element = document.createElement('article');
+    element.classList.add('book');
+    element.setAttribute('data-index', myLibrary.indexOf(this))
 
-    const bookTitle = document.createElement('p');
-    bookTitle.textContent = book.title;
-    bookNode.appendChild(bookTitle);
+    const elementTitle = document.createElement('p');
+    elementTitle.textContent = this.title;
+    element.appendChild(elementTitle);
 
-    const bookAuthor = document.createElement('p');
-    bookAuthor.textContent = book.author;
-    bookNode.appendChild(bookAuthor);
+    const elementAuthor = document.createElement('p');
+    elementAuthor.textContent = this.author;
+    element.appendChild(elementAuthor);
 
-    const bookPages = document.createElement('p');
-    bookPages.textContent = book.pages;
-    bookNode.appendChild(bookPages);
+    const elementPages = document.createElement('p');
+    elementPages.textContent = this.pages;
+    element.appendChild(elementPages);
 
-    const bookReadStatus = document.createElement('p');
-    bookReadStatus.textContent = book.read ? 'Read' : 'Not read yet';
-    bookNode.appendChild(bookReadStatus);
+    const elementReadStatus = document.createElement('p');
+    elementReadStatus.textContent = this.read ? 'Read' : 'Not read yet';
+    element.appendChild(elementReadStatus);
 
-    return bookNode;
+    return element;
+}
+
+function addBookToLibrary(title, author, pages, read) {
+    myLibrary.push(new Book(title, author, pages, read));
 }
 
 function createLibraryDisplay() {
     const libraryDisplay = document.getElementById('library');
     for (const book of myLibrary) {
-        libraryDisplay.appendChild(createBookNode(book));
+        libraryDisplay.appendChild(book.createElement());
     }
 }
 
@@ -53,7 +54,7 @@ showBookModalButton.addEventListener('click', () => {
     bookModal.showModal();
 });
 
-const newBookForm = document.getElementById('new-book-form')
+const newBookForm = document.getElementById('new-book-form');
 
 newBookForm.addEventListener('submit', () => {
     const newBookTitle = newBookForm.getElementById('new-book-title').value;
@@ -66,11 +67,8 @@ newBookForm.addEventListener('submit', () => {
 });
 
 // Sample Books (To be removed)
-const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, true);
-addBookToLibrary(theHobbit);
-const philosophersStone = new Book("Harry Potter and the Philosopher's Stone", 'J.K. Rowling', 223, true);
-addBookToLibrary(philosophersStone);
-const dune = new Book('Dune', 'Frank Herbert', 412, false);
-addBookToLibrary(dune);
+addBookToLibrary('The Hobbit', 'J.R.R. Tolkien', 295, true);
+addBookToLibrary("Harry Potter and the Philosopher's Stone", 'J.K. Rowling', 223, true);
+addBookToLibrary('Dune', 'Frank Herbert', 412, false);
 
 createLibraryDisplay();
