@@ -20,7 +20,6 @@ Book.prototype.changeReadStatus = function() {
 
 // Create display element based on book in memory
 Book.prototype.createElement = function() {
-    // Create all the pieces of the book element
     const element = document.createElement('article');
     element.classList.add('book');
 
@@ -51,15 +50,14 @@ Book.prototype.createElement = function() {
     element.appendChild(toggleReadButton);
 
     element.addEventListener('click', (event) => {
+        // Make sure the click was on a button
         if (!event.target.matches('button')) return;
         const value = event.target.dataset.value;
 
         if (value === 'remove') {
             myLibrary.splice(myLibrary.indexOf(this), 1);
             updateLibraryDisplay();
-        }
-
-        if (value === 'toggle-read') {
+        } else if (value === 'toggle-read') {
             this.changeReadStatus();
             event.currentTarget.replaceWith(this.createElement());
         }
@@ -76,6 +74,7 @@ function addBookToLibrary(title, author, pages, read) {
 function updateLibraryDisplay() {
     const libraryDisplay = document.getElementById('library');
     const bookElements = [];
+
     for (const book of myLibrary) {
         bookElements.push(book.createElement());
     }
@@ -100,7 +99,7 @@ newBookForm.addEventListener('submit', () => {
     updateLibraryDisplay();
 });
 
-// Sample Books (To be removed)
+// Sample Books
 addBookToLibrary('The Hobbit', 'J.R.R. Tolkien', 295, true);
 addBookToLibrary("Harry Potter and the Philosopher's Stone", 'J.K. Rowling', 223, true);
 addBookToLibrary('Dune', 'Frank Herbert', 412, false);
