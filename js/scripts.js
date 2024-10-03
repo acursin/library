@@ -1,3 +1,4 @@
+// Memory to store books
 const myLibrary = [];
 
 function Book(title, author, pages, read) {
@@ -7,6 +8,7 @@ function Book(title, author, pages, read) {
     this.read = read;
 }
 
+// For easily checking book properties
 Book.prototype.info = function() {
     let readMessage = this.read ? 'read' : 'not read yet';
     return `${this.title} by ${this.author}, ${this.pages} pages, ${readMessage}`;
@@ -16,11 +18,11 @@ Book.prototype.changeReadStatus = function() {
     this.read = !this.read;
 }
 
+// Create display element based on book in memory
 Book.prototype.createElement = function() {
+    // Create all the pieces of the book element
     const element = document.createElement('article');
     element.classList.add('book');
-    // Ties element to object using its index, only works because the display resets every update
-    element.setAttribute('data-index', myLibrary.indexOf(this))
 
     const elementTitle = document.createElement('p');
     elementTitle.textContent = this.title;
@@ -43,13 +45,23 @@ Book.prototype.createElement = function() {
     removeBookButton.setAttribute('data-value', 'remove');
     element.appendChild(removeBookButton);
 
+    const toggleReadButton = document.createElement('button');
+    toggleReadButton.textContent = 'Toggle';
+    toggleReadButton.setAttribute('data-value', 'toggle-read');
+    element.appendChild(toggleReadButton);
+
     element.addEventListener('click', (event) => {
         if (!event.target.matches('button')) return;
         const value = event.target.dataset.value;
 
         if (value === 'remove') {
-            myLibrary.splice(event.target.dataset.index, 1);
+            myLibrary.splice(myLibrary.indexOf(this), 1);
             updateLibraryDisplay();
+        }
+
+        if (value === 'toggle-read') {
+            this.changeReadStatus();
+            event.currentTarget.replaceWith(this.createElement());
         }
     });
 
